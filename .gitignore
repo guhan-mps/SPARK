@@ -1,0 +1,3 @@
+data_processing/*/__pycache__
+data_processing/*/.*
+data_processing/dataset/*.csv
