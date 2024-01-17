@@ -20,5 +20,3 @@ def read_latest_by_color(color:str,n:int):
           .paging(0,n))\
           .docs
     return res
-# print(read_latest_by_color("Black",10))
-# print(read_latest(10))
