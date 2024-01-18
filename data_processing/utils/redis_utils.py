@@ -4,7 +4,11 @@ from redis import Redis
 from redis.commands.search.field import NumericField, TextField
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
 
-def write_redis(r:Redis,res:List[str]):
+def write_redis(r:Redis,res:List[str])->None:
+    """
+    Writes the json string data into redis server and 
+    Creates index idx:shoes_index for the provided List of json string data
+    """
     try:
         r.ft("idx:shoes_index").dropindex(delete_documents=True)
     except:

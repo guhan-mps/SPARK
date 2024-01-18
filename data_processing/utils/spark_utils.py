@@ -5,17 +5,21 @@ from typing import List
 from multiprocessing.pool import ThreadPool
 
 def return_rdd(spark: SparkSession)->List[str]:
+    """
+    Returns the merged RDD representation of the loaded CSV files parallely
+    """
     file_list=["./dataset/7210_1.csv","./dataset/Datafiniti_Womens_Shoes_Jun19.csv","./dataset/Datafiniti_Womens_Shoes.csv"]
     
-
     def read_csv(file):
+        """
+        Reads a CSV file using spark
+        """
         df = spark.read\
             .option("header", "true") \
             .option("delimiter", ",") \
             .option("escape",'"')\
             .csv(file)
         return df
-    
 
     pool = ThreadPool(10)
     df_collection = pool.map(read_csv, file_list)
