@@ -3,13 +3,12 @@ from typing import List
 from redis import Redis
 from redis.commands.search.field import NumericField, TextField
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
-from redis.commands.search import Search
+
 def write_redis(r:Redis,res:List[str]):
     try:
         r.ft("idx:shoes_index").dropindex(delete_documents=True)
     except:
         print("No index")
-    print(len(res))
     for i in range(len(res)):
         r.json().set("shoe:"+str(i+1), '$',  json.loads(res[i]))
     search_schema = (
