@@ -1,0 +1,38 @@
+apiVersion: sparkoperator.k8s.io/v1beta2
+kind: SparkApplication
+metadata:
+  name: spark-redis-write
+  namespace: default
+spec:
+  volumes: 
+    - name: files 
+      persistentVolumeClaim:
+        claimName: pvc
+  sparkConf:
+    spark.jars.packages: "org.apache.spark:spark-avro_2.12:3.5.0"
+    spark.driver.extraJavaOptions: "-Dtemp.cache.dir=/tmp -Dtemp.home=/tmp"
+    spark.kubernetes.allocation.batch.size: "5"
+  type: Python
+  sparkVersion: "3.3.0"
+  mode: cluster
+  image: "guhan286/spark-write:latest"
+  imagePullPolicy: IfNotPresent
+  mainApplicationFile: local:///data_processing/data_load.py
+  driver:
+    cores: 1
+    coreLimit: "1200m"
+    memory: "4g"
+    labels:
+      version: 3.5.0
+    volumeMounts:
+      - name: files 
+        mountPath: /
+  executor:
+    cores: 2
+    instances: 2
+    memory: "512m"
+    labels:
+      version: 3.5.0
+    volumeMounts:
+      - name: files 
+        mountPath: /

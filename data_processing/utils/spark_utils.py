@@ -21,12 +21,16 @@ def return_rdd(spark: SparkSession)->List[str]:
             .csv(file)
         return df
 
-    pool = ThreadPool(10)
+    pool = ThreadPool(2)
     df_collection = pool.map(read_csv, file_list)
     pool.close()
     pool.join()
     merged_df = df_collection[0].unionByName(df_collection[1], allowMissingColumns=True)
     merged_df=merged_df.unionByName(df_collection[2],allowMissingColumns=True)
+#     merged_df=spark.read.option("header", "true") \
+#             .option("delimiter", ",") \
+#             .option("escape",'"')\
+#             .csv(["./dataset/7210_1.csv","./dataset/Datafiniti_Womens_Shoes_Jun19.csv","./dataset/Datafiniti_Womens_Shoes.csv"])
     reducedf =merged_df.select(['name','dateAdded','dateUpdated','brand','categories','colors'])
     reducedf=reducedf.withColumn('dateAdded',reducedf.dateAdded.cast(DateType()))
     reducedf=reducedf.withColumn('dateAddedInt',unix_timestamp(reducedf.dateAdded))
