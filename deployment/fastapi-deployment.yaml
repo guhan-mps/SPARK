@@ -17,3 +17,29 @@ spec:
           image: guhan286/sparkfastapi:latest
           ports:
             - containerPort: 8000
+          env:
+            - name: ELASTIC_USER
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-secret
+                  key: elastic-username
+            - name: ELASTIC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-secret
+                  key: elastic-password
+            - name: CLOUD_ID_1
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-secret
+                  key: cloud-id-1
+            - name: CLOUD_ID_2
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-secret
+                  key: cloud-id-2
+            - name: CLOUD_ID_3
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-secret
+                  key: cloud-id-3

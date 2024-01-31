@@ -1,7 +1,7 @@
 apiVersion: sparkoperator.k8s.io/v1beta2
 kind: SparkApplication
 metadata:
-  name: spark-redis-write
+  name: spark-redis-elastic-write
   namespace: default
 spec:
   volumes: 
@@ -36,3 +36,19 @@ spec:
     volumeMounts:
       - name: files 
         mountPath: /
+    envSecretKeyRefs:
+      ELASTIC_USER:
+        name: elastic-secret
+        key: elastic-username
+      ELASTIC_PASSWORD:
+        name: elastic-secret
+        key: elastic-password
+      CLOUD_ID_1:
+        name: elastic-secret
+        key: cloud-id-1
+      CLOUD_ID_2:
+        name: elastic-secret
+        key: cloud-id-2
+      CLOUD_ID_3:
+        name: elastic-secret
+        key: cloud-id-3    
