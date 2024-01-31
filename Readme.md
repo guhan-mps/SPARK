@@ -1,14 +1,14 @@
-# Spark application to cache data in redis
+# Spark application to cache data in Redis and ElasticSearch
 
-This project is a Spark application that caches its read data into a redis cache and this cache is used by a FastAPI API that fetches the data in redis through redis search queries.
+This project is a Spark application that caches its read data into a redis cache and elasticsearch, this cache is used by a FastAPI API that fetches the data in redis through redis search queries and elasticsearch through its search queries.
 
 ## Description
 
-This project aims at making data fetching faster by using Spark over Redis, both of which are distributed data processing layers which facilitate faster huge data retrival by a backendapi. The project consists of three directories. The purpose of them are:
+This project aims at making data fetching faster by using Spark over Redis and ElasticSearch, both of which are distributed data processing layers which facilitate faster huge data retrival by a backendapi. The project consists of three directories. The purpose of them are:
 
-* **backendapi:** This directory consists of a backend API written with FastAPI, that queries data cached in Redis. This API retrives the latest n shoes available in the redis cached data and can retrive the latest n shoes of the required color in the redis cached data. This API fecthes these through redis search queries which makes the required data to be fetched faster.
+* **backendapi:** This directory consists of a backend API written with FastAPI, that queries data cached in Redis and ElasticSearch. This API retrives the latest n shoes and can retrive the latest n shoes of the required color in the Redis and ElasticSearch's cached data.
 
-* **data_processing:** This directory consists of the spark job. This spark job reads the data available as CSV's in the dataset directory parallely using mulithreading, converts the read dataframe to a list of RDDs and then writes the RDDs as json data to the redis cache. This also creates indices for the written data so as to facilitate redis search query by the backendapi's search query.
+* **data_processing:** This directory consists of the spark job. This spark job reads the data available as CSV's in the dataset directory parallely using mulithreading, converts the read dataframe to a list of RDDs and then writes the RDDs as json data to the redis cache and ElasticSearch cache. This also creates indices for the written data so as to facilitate search queries of redis and elasticsearch by the backendapi's search query.
 * **deployment:** This directory consists of YAML files for deploying the redis, spark job and the API into the kubernetes as a service. This packaging makes the project available regardless of the platform being run. 
 
 ## Getting Started
