@@ -5,3 +5,4 @@ backendapi/*/__pycache__
 backendapi/__pycache__
 data_processing/config/.env
 backendapi/config/.env
+*.csv

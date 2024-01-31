@@ -23,7 +23,8 @@ This project aims at making data fetching faster by using Spark over Redis, both
 * uvicorn==0.25.0
 * greenlet==3.0.3
 * pyspark==3.5.0
-
+* elasticsearch==8.12.0
+* python-dotenv==1.0.0
 ### Installing
 
 * Get the source code using git clone https://github.com/guhan-mps/SPARK
@@ -37,6 +38,7 @@ This project aims at making data fetching faster by using Spark over Redis, both
 $ kubectl create clusterrolebinding default \
   --clusterrole=edit --serviceaccount=default:default --namespace=default
 ```
+* If you are running locally set the environment variables ELASTIC_USER, ELASTIC_PASSWORD and CLOUD_ID to ElasticSearch username, ElasticSearch password and ElasticSearch deployment's cloud_id respectively.
 
 ### Executing program
 * For **Executing locally**
@@ -58,7 +60,9 @@ $ kubectl create clusterrolebinding default \
     - Move to the deployment directory and run 
     ```
     $ minikube start
+    $ helm install incubator/sparkoperator --namespace spark-operator --set sparkJobNamespace=test-ns
     $ kubectl apply -f volume.yaml
+    $ kubectl apply -f elastic-secret.yaml
     $ kubectl apply -f redis-deployment.yaml
     $ kubectl apply -f redis-service.yaml
     $ kubectl apply -f spark-application.yaml
