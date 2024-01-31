@@ -1,8 +1,9 @@
 from fastapi import FastAPI
-from .routes import shoes
+from .routes import redis_shoes,elastic_shoes
 
 app=FastAPI()
-app.include_router(shoes.router)
+app.include_router(redis_shoes.router)
+app.include_router(elastic_shoes.router)
 
 @app.get("/")
 def root():
